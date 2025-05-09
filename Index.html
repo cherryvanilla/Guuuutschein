@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Page title</title>
+</head>
+<body>
+    
+</body>
+</html><!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Geburtstags-Gutschein</title>
+  <style>
+    body {
+      font-family: 'Dancing Script', serif;
+      background: linear-gradient(to bottom, #fff5f8, #ffeef5);
+      color: #5c3a3a;
+      margin: 0;
+      padding: 2rem;
+      text-align: center;
+      background-images: 
+      url: https://images.app.goo.gl/sxTPW
+      background-repeat: no-repeat;
+      background-position: top right;
+      background-size: 200px auto;
+    }
+    .card {
+      max-width: 600px;
+      margin: 2rem auto;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      padding: 2rem;
+      border: 3px solid #e6b8c8;
+      position: relative;
+      background-image: url('https://images.app.goo.gl/sxT');
+      background-size: cover;
+      background-position: center;
+      background-blend-mode: lighten;
+    }
+    h1 {
+      font-size: 2.5rem;
+      color: #c08090;
+      font-family: 'Cursive';
+    }
+    p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 1rem;
+      border-radius: 10px;
+    }
+    .signature {
+      margin-top: 2rem;
+      font-style: italic;
+      color: #a87575;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 0.5rem;
+      border-radius: 10px;
+    }
+    #scratch-container {
+      margin: 2rem auto;
+      width: 200px;
+      height: 100px;
+      position: relative;
+    }
+    #reward {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #d47789;
+      line-height: 100px;
+    }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Gutschein</h1>
+    <p>
+      Liebe Christina,<br>
+      dieser Gutschein schenkt einen Moment<br>
+      voller Schönheit und Entspannung.<br>
+      Genieße die exklusive Behandlung.<br>
+      Zum Geburtstag schenken wir Dir einen Zuschuss für deine Schönheitsbehandlung.
+    </p>
+    <div id="scratch-container">
+      <div id="reward">100&nbsp;&euro;</div>
+      <canvas id="scratch" width="200" height="100"></canvas>
+    </div>
+    <div class="signature">
+      Zum Geburtstag wünschen wir dir alles Gute.<br>
+      Dirk und Jenny.
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('scratch');
+    const ctx = canvas.getContext('2d');
+    const reward = document.getElementById('reward');
+
+    let isDrawing = false;
+
+    function scratch(e) {
+      const rect = canvas.getBoundingClientRect();
+      const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+      const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+
+      if (!isDrawing) return;
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.beginPath();
+      ctx.arc(x, y, 15, 0, 2 * Math.PI);
+      ctx.fill();
+    }
+
+    canvas.addEventListener('mousedown', () => isDrawing = true);
+    canvas.addEventListener('mouseup', () => isDrawing = false);
+    canvas.addEventListener('mousemove', scratch);
+
+    canvas.addEventListener('touchstart', () => isDrawing = true);
+    canvas.addEventListener('touchend', () => isDrawing = false);
+    canvas.addEventListener('touchmove', scratch);
+
+    function coverCanvas() {
+      ctx.fillStyle = '#c0c0c0';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    coverCanvas();
+  </script>
+</body>
+</html>
